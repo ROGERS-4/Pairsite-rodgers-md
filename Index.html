@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RODGERS MD - Pair Code Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    h1 { color: #ffcc00; }
+    input, button { padding: 10px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; }
+    input { width: 250px; }
+    button { background: #ffcc00; color: #000; cursor: pointer; font-weight: bold; }
+    button:hover { opacity: 0.9; }
+    #result { margin-top: 20px; font-size: 18px; color: #00ffcc; }
+  </style>
+</head>
+<body>
+  <h1>RODGERS MD - WhatsApp Pair</h1>
+  <p>Enter your WhatsApp number with country code (e.g., +2547xxxxxxx)</p>
+  <input type="text" id="phone" placeholder="+2547xxxxxxx">
+  <button onclick="generatePair()">Generate Pair Code</button>
+  <div id="result"></div>
+
+  <script>
+    async function generatePair() {
+      const phone = document.getElementById("phone").value.trim();
+      if (!phone) {
+        alert("Please enter your phone number!");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ number: phone })
+        });
+
+        const data = await res.json();
+        if (data.error) {
+          document.getElementById("result").innerText = "Error: " + data.error;
+        } else {
+          document.getElementById("result").innerHTML = `✅ Your Pair Code: <b>${data.pairCode}</b><br>Channel: <a href="${data.channel}" target="_blank">${data.channel}</a>`;
+        }
+      } catch (err) {
+        document.getElementById("result").innerText = "Network error, try again!";
+      }
+    }
+  </script>
+</body>
+</html>
