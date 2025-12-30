@@ -3,48 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RODGERS MD - Pair Code Generator</title>
+  <title>RODGERS MD Session Site</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    h1 { color: #ffcc00; }
-    input, button { padding: 10px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; }
-    input { width: 250px; }
-    button { background: #ffcc00; color: #000; cursor: pointer; font-weight: bold; }
-    button:hover { opacity: 0.9; }
-    #result { margin-top: 20px; font-size: 18px; color: #00ffcc; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      gap: 20px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      width: 250px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #00b894;
+      color: white;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #019875;
+    }
+    .pair-code {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fdcb6e;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+    }
+    .channel-btn {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 8px 15px;
+      background: #0984e3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.2s;
+    }
+    .channel-btn:hover {
+      background: #0652dd;
+    }
   </style>
 </head>
 <body>
-  <h1>RODGERS MD - WhatsApp Pair</h1>
-  <p>Enter your WhatsApp number with country code (e.g., +2547xxxxxxx)</p>
-  <input type="text" id="phone" placeholder="+2547xxxxxxx">
-  <button onclick="generatePair()">Generate Pair Code</button>
-  <div id="result"></div>
+  <h1>Welcome to RODGERS MD Session Generator</h1>
+  <input type="text" id="number" placeholder="Enter your WhatsApp number (e.g., 2547xxxxxxx)">
+  <button onclick="generatePairCode()">Generate Pair Code</button>
+  <p class="pair-code" id="pairCode"></p>
+
+  <a href="https://whatsapp.com/channel/0029VbBR3ib3LdQQlEG3vd1x" class="channel-btn" target="_blank">
+    Visit Our Channel
+  </a>
+
+  <footer>Powered by Rodgers</footer>
 
   <script>
-    async function generatePair() {
-      const phone = document.getElementById("phone").value.trim();
-      if (!phone) {
-        alert("Please enter your phone number!");
-        return;
-      }
+    function generatePairCode() {
+      const number = document.getElementById('number').value.trim();
+      if (!number) return alert("Enter a valid number!");
+      
+      // Generate random 6-character code
+      const pairCode = Math.random().toString(36).substring(2,8).toUpperCase();
 
-      try {
-        const res = await fetch("/api/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ number: phone })
-        });
+      // Show the pair code on site
+      document.getElementById('pairCode').innerText = `Pair Code: ${pairCode}`;
 
-        const data = await res.json();
-        if (data.error) {
-          document.getElementById("result").innerText = "Error: " + data.error;
-        } else {
-          document.getElementById("result").innerHTML = `✅ Your Pair Code: <b>${data.pairCode}</b><br>Channel: <a href="${data.channel}" target="_blank">${data.channel}</a>`;
-        }
-      } catch (err) {
-        document.getElementById("result").innerText = "Network error, try again!";
-      }
+      // TODO: send to backend bot to link WhatsApp automatically
+      console.log("Pair Code generated for", number, ":", pairCode);
     }
   </script>
 </body>
