@@ -2,13 +2,10 @@
   "name": "rodgers-md-pairsite",
   "version": "1.0.0",
   "description": "RODGERS MD Pair Site",
-  "main": "index.html",
   "scripts": {
     "start": "serve ."
   },
   "dependencies": {
     "serve": "^14.2.0"
-  },
-  "author": "Rodgers",
-  "license": "MIT"
+  }
 }
