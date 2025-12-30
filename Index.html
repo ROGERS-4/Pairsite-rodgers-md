@@ -17,17 +17,27 @@
       align-items: center;
       min-height: 100vh;
       overflow-x: hidden;
+      animation: bgAnimate 20s linear infinite;
     }
+
+    @keyframes bgAnimate {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
       text-align: center;
-      animation: glow 2s ease-in-out infinite alternate;
+      animation: neonGlow 1.5s ease-in-out infinite alternate;
     }
-    @keyframes glow {
+
+    @keyframes neonGlow {
       from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff; }
       to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 80px #0ff; }
     }
+
     form {
       display: flex;
       flex-direction: column;
@@ -35,7 +45,14 @@
       margin-bottom: 1rem;
       width: 90%;
       max-width: 400px;
+      animation: fadeIn 2s ease forwards;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
     input[type="text"] {
       padding: 0.8rem;
       font-size: 1rem;
@@ -43,6 +60,7 @@
       border: none;
       outline: none;
     }
+
     button {
       padding: 0.8rem;
       font-size: 1rem;
@@ -52,35 +70,46 @@
       color: #000;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
     }
+
     button:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
     }
+
     #output {
       margin-top: 1rem;
       text-align: center;
       word-break: break-word;
+      animation: fadeIn 2s ease forwards;
     }
+
     .action-buttons {
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       flex-wrap: wrap;
+      animation: fadeIn 2s ease forwards;
     }
+
     footer {
       margin-top: auto;
       padding: 1rem;
       text-align: center;
       font-size: 0.9rem;
       color: #0ff;
+      animation: fadeIn 2s ease forwards;
     }
+
     a {
       color: #0ff;
       text-decoration: none;
       font-weight: bold;
     }
+
     a:hover {
       text-decoration: underline;
     }
@@ -100,6 +129,9 @@
     <a href="https://wa.me/254755660053" target="_blank">
       <button id="contactOwnerButton" type="button">Contact Owner</button>
     </a>
+    <a href="https://whatsapp.com/channel/0029VbBR3ib3Ld1xQQlEG3vd1x" target="_blank">
+      <button type="button">Visit Our Channel</button>
+    </a>
   </div>
 
   <footer>
@@ -111,15 +143,12 @@
     const numberInput = document.getElementById("numberInput");
     const output = document.getElementById("output");
     const copyButton = document.getElementById("copyButton");
-
     let latestPairCode = "";
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const number = numberInput.value.trim();
       if (!number) return alert("Please enter your number!");
-
       output.innerHTML = "Generating pair code... ⏳";
       copyButton.style.display = "none";
 
@@ -136,7 +165,6 @@
           output.innerHTML = `
             ✅ Pair Code: <b>${latestPairCode}</b><br>
             ✅ Session JSON sent to your WhatsApp!<br>
-            <a href="https://whatsapp.com/channel/0029VbBR3ib3Ld1xQQlEG3vd1x" target="_blank">Visit Our Channel</a>
           `;
           copyButton.style.display = "inline-block";
         } else {
@@ -152,12 +180,8 @@
     copyButton.addEventListener("click", () => {
       if (!latestPairCode) return;
       navigator.clipboard.writeText(latestPairCode)
-        .then(() => {
-          alert("Pair code copied to clipboard ✅");
-        })
-        .catch(() => {
-          alert("Failed to copy pair code ❌");
-        });
+        .then(() => alert("Pair code copied to clipboard ✅"))
+        .catch(() => alert("Failed to copy pair code ❌"));
     });
   </script>
 </body>
