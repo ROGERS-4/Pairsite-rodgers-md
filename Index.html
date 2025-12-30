@@ -3,152 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RODGERS MD Pair Site</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <title>Rodgers MD Pair Site</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Body & Gradient Background */
     body {
-      font-family: 'Orbitron', sans-serif;
       margin: 0;
-      padding: 0;
-      height: 100vh;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-
-    /* Animated Background Circles */
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(0,255,255,0.1);
-      animation: float 12s infinite;
-      z-index: 0;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px) translateX(0px); }
-      50% { transform: translateY(-200px) translateX(100px); }
-      100% { transform: translateY(0px) translateX(0px); }
-    }
-
     h1 {
-      z-index: 1;
-      font-size: 2.5rem;
+      font-size: 2rem;
+      margin-bottom: 1rem;
       text-align: center;
-      background: linear-gradient(90deg, #00fff7, #ff00f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       animation: glow 2s ease-in-out infinite alternate;
     }
-
     @keyframes glow {
-      0% { text-shadow: 0 0 5px #00fff7, 0 0 10px #ff00f7; }
-      100% { text-shadow: 0 0 20px #00fff7, 0 0 40px #ff00f7; }
+      from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff; }
+      to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 80px #0ff; }
     }
-
-    p { z-index: 1; font-size: 1.1rem; margin-bottom: 20px; }
-
-    input {
-      z-index: 1;
-      padding: 12px;
-      font-size: 16px;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      width: 90%;
+      max-width: 400px;
+    }
+    input[type="text"] {
+      padding: 0.8rem;
+      font-size: 1rem;
       border-radius: 8px;
       border: none;
       outline: none;
-      margin-bottom: 15px;
-      width: 250px;
-      text-align: center;
     }
-
     button {
-      z-index: 1;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
+      padding: 0.8rem;
+      font-size: 1rem;
       border-radius: 8px;
-      background: linear-gradient(45deg, #00fff7, #ff00f7);
-      color: #fff;
+      border: none;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s ease;
-      font-weight: bold;
+      transition: transform 0.2s ease;
     }
-
     button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px #00fff7, 0 0 25px #ff00f7;
+      transform: scale(1.05);
     }
-
-    #pairCode {
-      margin-top: 20px;
-      font-size: 1.5rem;
-      color: #00fff7;
-      font-weight: bold;
-      text-shadow: 0 0 10px #00fff7;
-      animation: pulse 1.5s infinite;
-      z-index: 1;
+    #output {
+      margin-top: 1rem;
+      text-align: center;
+      word-break: break-word;
     }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
     }
-
     footer {
-      z-index: 1;
-      margin-top: 40px;
+      margin-top: auto;
+      padding: 1rem;
       text-align: center;
       font-size: 0.9rem;
-      color: #aaa;
+      color: #0ff;
     }
-
-    footer a {
-      color: #00fff7;
+    a {
+      color: #0ff;
       text-decoration: none;
       font-weight: bold;
     }
-
-    footer a:hover {
-      text-shadow: 0 0 10px #00fff7;
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <h1>RODGERS MD PAIR SITE</h1>
+  
+  <form id="pairForm">
+    <input type="text" id="numberInput" placeholder="Enter WhatsApp number with country code" required>
+    <button type="submit">Generate Pair Code</button>
+  </form>
 
-  <!-- Animated circles -->
-  <div class="circle" style="width:200px; height:200px; top:10%; left:15%;"></div>
-  <div class="circle" style="width:150px; height:150px; top:60%; left:70%;"></div>
-  <div class="circle" style="width:100px; height:100px; top:30%; left:50%;"></div>
-
-  <h1>🔗 RODGERS MD Pair Site</h1>
-  <p>Enter your WhatsApp number to generate a pair code:</p>
-  <input type="text" id="number" placeholder="2547xxxxxxx" />
-  <br/>
-  <button onclick="generatePairCode()">Generate Pair Code</button>
-  <h2 id="pairCode"></h2>
+  <div id="output"></div>
+  <div class="action-buttons">
+    <button id="copyButton" style="display:none;">Copy Pair Code</button>
+    <a href="https://wa.me/254755660053" target="_blank">
+      <button id="contactOwnerButton" type="button">Contact Owner</button>
+    </a>
+  </div>
 
   <footer>
-    <p>Powered by Rodgers</p>
-    <p><a href="https://whatsapp.com/channel/0029VbBR3ib3LdQQlEG3vd1x" target="_blank">Visit our Channel</a></p>
+    Powered by Rodgers
   </footer>
 
   <script>
-    function generatePairCode() {
-      const number = document.getElementById('number').value.trim();
-      if (!number) { alert('Enter your WhatsApp number!'); return; }
+    const form = document.getElementById("pairForm");
+    const numberInput = document.getElementById("numberInput");
+    const output = document.getElementById("output");
+    const copyButton = document.getElementById("copyButton");
 
-      // Generate 8-character alphanumeric code
-      const code = Array.from({length:8}, () => Math.floor(Math.random()*36).toString(36)).join('').toUpperCase();
+    let latestPairCode = "";
 
-      document.getElementById('pairCode').textContent = `Your Pair Code: ${code}`;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      // TODO: Connect to backend API to send JSON session automatically
-      console.log(`Pair code for ${number}: ${code}`);
-    }
+      const number = numberInput.value.trim();
+      if (!number) return alert("Please enter your number!");
+
+      output.innerHTML = "Generating pair code... ⏳";
+      copyButton.style.display = "none";
+
+      try {
+        const res = await fetch("https://rodgers-md-backend-2.onrender.com/pair", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ number })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          latestPairCode = data.pairCode;
+          output.innerHTML = `
+            ✅ Pair Code: <b>${latestPairCode}</b><br>
+            ✅ Session JSON sent to your WhatsApp!<br>
+            <a href="https://whatsapp.com/channel/0029VbBR3ib3Ld1xQQlEG3vd1x" target="_blank">Visit Our Channel</a>
+          `;
+          copyButton.style.display = "inline-block";
+        } else {
+          output.innerHTML = `❌ Error: ${data.error}`;
+        }
+
+      } catch (err) {
+        console.error(err);
+        output.innerHTML = "❌ Failed to connect to backend!";
+      }
+    });
+
+    copyButton.addEventListener("click", () => {
+      if (!latestPairCode) return;
+      navigator.clipboard.writeText(latestPairCode)
+        .then(() => {
+          alert("Pair code copied to clipboard ✅");
+        })
+        .catch(() => {
+          alert("Failed to copy pair code ❌");
+        });
+    });
   </script>
 </body>
 </html>
